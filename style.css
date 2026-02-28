@@ -1,14 +1,20 @@
-body {
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
     font-family: Arial, sans-serif;
     background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
     color: white;
     text-align: center;
+    transition: 0.3s;
 }
 
 header {
-    padding: 40px;
-    background: rgba(0, 0, 0, 0.4);
+    padding: 40px 20px;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 h1 {
@@ -16,22 +22,59 @@ h1 {
     color: gold;
 }
 
+.moon {
+    font-size: 50px;
+    margin: 15px 0;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+.countdown {
+    margin: 15px 0;
+}
+
+#timer {
+    font-size: 22px;
+    margin-top: 5px;
+    color: gold;
+}
+
+.mode-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
 .menu {
-    padding: 30px;
+    padding: 40px 20px;
 }
 
 .menu h2 {
-    color: gold;
     margin-bottom: 20px;
+    color: gold;
 }
 
 .card {
     background: rgba(255, 255, 255, 0.1);
     margin: 15px auto;
     padding: 20px;
-    width: 60%;
+    width: 80%;
+    max-width: 400px;
     border-radius: 12px;
     transition: 0.3s;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .card:hover {
@@ -43,4 +86,19 @@ footer {
     padding: 20px;
     background: rgba(0, 0, 0, 0.5);
     margin-top: 30px;
+}
+
+/* Light Mode */
+.light-mode {
+    background: white;
+    color: black;
+}
+
+.light-mode header,
+.light-mode footer {
+    background: #f0f0f0;
+}
+
+.light-mode .card {
+    background: #e0e0e0;
 }

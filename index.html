@@ -3,62 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <title>Ramadan Kareem Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>🌙 Ramadan Kareem</h1>
-        <p>Special Iftar & Suhoor Menu</p>
-    </header>
+<header>
+    <h1>🌙 Ramadan Kareem</h1>
+    <p>Special Iftar & Suhoor Menu</p>
 
-    <section class="menu">
-        <h2>🥣 Suhoor</h2>
-        <div class="card">
-            <h3>Paratha & Omelette</h3>
-            <p>Freshly made with butter & spices</p>
-        </div>
-        <div class="card">
-            <h3>Dates & Milk</h3>
-            <p>Healthy start for fasting</p>
-        </div>
-        <div class="card">
-            <h3>Fruit Bowl</h3>
-            <p>Seasonal fresh fruits</p>
-        </div>
+    <div class="moon">🌙</div>
+
+    <section class="countdown">
+        <h2>⏳ Time Left for Iftar</h2>
+        <p id="timer">Loading...</p>
     </section>
 
-    <section class="menu">
-        <h2>🍽 Iftar</h2>
-        <div class="card">
-            <h3>Samosa</h3>
-            <p>Crispy & spicy snack</p>
-        </div>
-        <div class="card">
-            <h3>Haleem</h3>
-            <p>Traditional Ramadan special</p>
-        </div>
-        <div class="card">
-            <h3>Chicken Biryani</h3>
-            <p>Rich & flavorful</p>
-        </div>
-    </section>
+    <button onclick="toggleMode()" class="mode-btn">Toggle Mode</button>
+</header>
 
-    <section class="menu">
-        <h2>🍰 Desserts</h2>
-        <div class="card">
-            <h3>Sheer Khurma</h3>
-            <p>Sweet vermicelli milk dessert</p>
-        </div>
-        <div class="card">
-            <h3>Gulab Jamun</h3>
-            <p>Soft & syrupy delight</p>
-        </div>
-    </section>
+<!-- SUHOOR -->
+<section class="menu">
+    <h2>🥣 Suhoor</h2>
 
-    <footer>
-        <p>✨ Wishing You a Blessed Ramadan ✨</p>
-    </footer>
+    <div class="card">
+        <img src="https://source.unsplash.com/400x250/?paratha" alt="">
+        <h3>Paratha & Omelette</h3>
+        <p>Freshly made with butter & spices</p>
+    </div>
 
+    <div class="card">
+        <img src="https://source.unsplash.com/400x250/?dates" alt="">
+        <h3>Dates & Milk</h3>
+        <p>Healthy start for fasting</p>
+    </div>
+
+    <div class="card">
+        <img src="https://source.unsplash.com/400x250/?fruits" alt="">
+        <h3>Fruit Bowl</h3>
+        <p>Seasonal fresh fruits</p>
+    </div>
+</section>
+
+<!-- IFTAR -->
+<section class="menu">
+    <h2>🍽 Iftar</h2>
+
+    <div class="card">
+        <img src="https://source.unsplash.com/400x250/?samosa" alt="">
+        <h3>Samosa</h3>
+        <p>Crispy & spicy snack</p>
+    </div>
+
+    <div class="card">
+        <img src="https://source.unsplash.com/400x250/?haleem" alt="">
+        <h3>Haleem</h3>
+        <p>Traditional Ramadan special</p>
+    </div>
+
+    <div class="card">
+        <img src="https://source.unsplash.com/400x250/?biryani" alt="">
+        <h3>Chicken Biryani</h3>
+        <p>Rich & flavorful</p>
+    </div>
+</section>
+
+<!-- DESSERT -->
+<section class="menu">
+    <h2>🍰 Desserts</h2>
+
+    <div class="card">
+        <img src="https://source.unsplash.com/400x250/?sheer-khurma" alt="">
+        <h3>Sheer Khurma</h3>
+        <p>Sweet vermicelli milk dessert</p>
+    </div>
+
+    <div class="card">
+        <img src="https://source.unsplash.com/400x250/?gulab-jamun" alt="">
+        <h3>Gulab Jamun</h3>
+        <p>Soft & syrupy delight</p>
+    </div>
+</section>
+
+<footer>
+    ✨ Wishing You a Blessed Ramadan ✨
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
