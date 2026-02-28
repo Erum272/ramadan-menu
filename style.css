@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: white;
+    text-align: center;
+}
+
+header {
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+    font-size: 40px;
+    color: gold;
+}
+
+.menu {
+    padding: 30px;
+}
+
+.menu h2 {
+    color: gold;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 15px auto;
+    padding: 20px;
+    width: 60%;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+footer {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    margin-top: 30px;
+}
