@@ -22,7 +22,7 @@ setInterval(updateCountdown, 1000);
 updateCountdown();
 
 
-// Dark Mode with Save
+// Dark Mode Save
 function toggleMode() {
     document.body.classList.toggle("light-mode");
 
@@ -54,19 +54,40 @@ function searchMenu() {
 
 // Cart
 let cart = [];
+let total = 0;
 
-function addToCart(item) {
-    cart.push(item);
+function addToCart(item, price) {
+    cart.push({ item, price });
+    total += price;
     displayCart();
 }
 
 function displayCart() {
     const cartList = document.getElementById("cart-list");
+    const totalDisplay = document.getElementById("total");
+
     cartList.innerHTML = "";
 
-    cart.forEach(item => {
+    cart.forEach((product, index) => {
         let li = document.createElement("li");
-        li.textContent = item;
+        li.innerHTML = `
+            ${product.item} - ₹${product.price}
+            <button onclick="removeItem(${index})">❌</button>
+        `;
         cartList.appendChild(li);
     });
+
+    totalDisplay.innerText = total;
+}
+
+function removeItem(index) {
+    total -= cart[index].price;
+    cart.splice(index, 1);
+    displayCart();
+}
+
+function clearCart() {
+    cart = [];
+    total = 0;
+    displayCart();
 }

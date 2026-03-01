@@ -10,7 +10,7 @@
 
 <header>
     <h1>🌙 Ramadan Kareem</h1>
-    <p>Special Iftar & Suhoor Menu</p>
+    <p>Premium Iftar Special Menu</p>
 
     <div class="moon">🌙</div>
 
@@ -30,35 +30,40 @@
         <img src="https://source.unsplash.com/400x250/?paratha" alt="">
         <h3>Paratha</h3>
         <p>Freshly made with butter</p>
-        <button onclick="addToCart('Paratha')">Add to Cart</button>
+        <p class="price">₹80</p>
+        <button onclick="addToCart('Paratha',80)">Add to Cart</button>
     </div>
 
     <div class="card">
         <img src="https://source.unsplash.com/400x250/?samosa" alt="">
         <h3>Samosa</h3>
         <p>Crispy Ramadan snack</p>
-        <button onclick="addToCart('Samosa')">Add to Cart</button>
+        <p class="price">₹40</p>
+        <button onclick="addToCart('Samosa',40)">Add to Cart</button>
     </div>
 
     <div class="card">
         <img src="https://source.unsplash.com/400x250/?haleem" alt="">
         <h3>Haleem</h3>
         <p>Traditional special dish</p>
-        <button onclick="addToCart('Haleem')">Add to Cart</button>
+        <p class="price">₹150</p>
+        <button onclick="addToCart('Haleem',150)">Add to Cart</button>
     </div>
 
     <div class="card">
         <img src="https://source.unsplash.com/400x250/?biryani" alt="">
         <h3>Biryani</h3>
         <p>Rich & flavorful</p>
-        <button onclick="addToCart('Biryani')">Add to Cart</button>
+        <p class="price">₹200</p>
+        <button onclick="addToCart('Biryani',200)">Add to Cart</button>
     </div>
 
     <div class="card">
         <img src="https://source.unsplash.com/400x250/?gulab-jamun" alt="">
         <h3>Gulab Jamun</h3>
         <p>Sweet dessert delight</p>
-        <button onclick="addToCart('Gulab Jamun')">Add to Cart</button>
+        <p class="price">₹60</p>
+        <button onclick="addToCart('Gulab Jamun',60)">Add to Cart</button>
     </div>
 
 </section>
@@ -66,6 +71,8 @@
 <section class="cart">
     <h2>🛒 Your Cart</h2>
     <ul id="cart-list"></ul>
+    <h3>Total: ₹<span id="total">0</span></h3>
+    <button onclick="clearCart()">Clear Cart</button>
 </section>
 
 <footer>
