@@ -20,69 +20,52 @@
     </section>
 
     <button onclick="toggleMode()" class="mode-btn">Toggle Mode</button>
+
+    <input type="text" id="search" placeholder="🔍 Search food..." onkeyup="searchMenu()">
 </header>
 
-<!-- SUHOOR -->
 <section class="menu">
-    <h2>🥣 Suhoor</h2>
 
     <div class="card">
         <img src="https://source.unsplash.com/400x250/?paratha" alt="">
-        <h3>Paratha & Omelette</h3>
-        <p>Freshly made with butter & spices</p>
+        <h3>Paratha</h3>
+        <p>Freshly made with butter</p>
+        <button onclick="addToCart('Paratha')">Add to Cart</button>
     </div>
-
-    <div class="card">
-        <img src="https://source.unsplash.com/400x250/?dates" alt="">
-        <h3>Dates & Milk</h3>
-        <p>Healthy start for fasting</p>
-    </div>
-
-    <div class="card">
-        <img src="https://source.unsplash.com/400x250/?fruits" alt="">
-        <h3>Fruit Bowl</h3>
-        <p>Seasonal fresh fruits</p>
-    </div>
-</section>
-
-<!-- IFTAR -->
-<section class="menu">
-    <h2>🍽 Iftar</h2>
 
     <div class="card">
         <img src="https://source.unsplash.com/400x250/?samosa" alt="">
         <h3>Samosa</h3>
-        <p>Crispy & spicy snack</p>
+        <p>Crispy Ramadan snack</p>
+        <button onclick="addToCart('Samosa')">Add to Cart</button>
     </div>
 
     <div class="card">
         <img src="https://source.unsplash.com/400x250/?haleem" alt="">
         <h3>Haleem</h3>
-        <p>Traditional Ramadan special</p>
+        <p>Traditional special dish</p>
+        <button onclick="addToCart('Haleem')">Add to Cart</button>
     </div>
 
     <div class="card">
         <img src="https://source.unsplash.com/400x250/?biryani" alt="">
-        <h3>Chicken Biryani</h3>
+        <h3>Biryani</h3>
         <p>Rich & flavorful</p>
-    </div>
-</section>
-
-<!-- DESSERT -->
-<section class="menu">
-    <h2>🍰 Desserts</h2>
-
-    <div class="card">
-        <img src="https://source.unsplash.com/400x250/?sheer-khurma" alt="">
-        <h3>Sheer Khurma</h3>
-        <p>Sweet vermicelli milk dessert</p>
+        <button onclick="addToCart('Biryani')">Add to Cart</button>
     </div>
 
     <div class="card">
         <img src="https://source.unsplash.com/400x250/?gulab-jamun" alt="">
         <h3>Gulab Jamun</h3>
-        <p>Soft & syrupy delight</p>
+        <p>Sweet dessert delight</p>
+        <button onclick="addToCart('Gulab Jamun')">Add to Cart</button>
     </div>
+
+</section>
+
+<section class="cart">
+    <h2>🛒 Your Cart</h2>
+    <ul id="cart-list"></ul>
 </section>
 
 <footer>
