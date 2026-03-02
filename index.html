@@ -1,52 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ramadan Menu Ultra</title>
+    <title>Ramadan Menu Ultra Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>🌙 Ramadan Menu Planner ULTRA</h1>
+    <h1>🌙 Ramadan Menu Ultra Pro</h1>
 
     <p id="date"></p>
     <p id="countdown"></p>
 
     <button onclick="toggleMode()">🌗 Toggle Mode</button>
 
-    <h2>Add Dish</h2>
-    <input type="text" id="dishName" placeholder="Dish Name">
-    <input type="number" id="calories" placeholder="Calories">
-    <input type="number" id="protein" placeholder="Protein (g)">
-    <input type="number" id="carbs" placeholder="Carbs (g)">
-    <input type="number" id="fat" placeholder="Fat (g)">
+    <h2>🥗 Add Dish</h2>
+    <input type="text" id="name" placeholder="Dish Name">
+    <input type="number" id="cal" placeholder="Calories">
+    <input type="number" id="protein" placeholder="Protein">
+    <input type="number" id="carbs" placeholder="Carbs">
+    <input type="number" id="fat" placeholder="Fat">
     <button onclick="addDish()">Add</button>
 
-    <h3>Search</h3>
-    <input type="text" id="searchInput" onkeyup="searchDish()">
+    <h3>🔎 Search</h3>
+    <input type="text" id="search" onkeyup="searchDish()">
 
     <h3>Sort</h3>
     <button onclick="sortLow()">Low → High</button>
     <button onclick="sortHigh()">High → Low</button>
 
-    <ul id="dishList"></ul>
+    <ul id="list"></ul>
 
-    <h3>Total Calories: <span id="totalCalories">0</span></h3>
-
-    <div class="progress-container">
-        <div id="progressBar"></div>
+    <h3>Total Calories: <span id="total">0</span> / 2000</h3>
+    <div class="progress">
+        <div id="bar"></div>
     </div>
 
-    <h2>Ramadan Goals</h2>
+    <h2>💧 Water Tracker</h2>
+    <button onclick="addWater()">+1 Glass</button>
+    <p>Glasses: <span id="water">0</span>/8</p>
+
+    <h2>📿 Tasbeeh Counter</h2>
+    <button onclick="tasbeehCount()">Count</button>
+    <button onclick="resetTasbeeh()">Reset</button>
+    <p>Count: <span id="tasbeeh">0</span></p>
+
+    <h2>🎯 Ramadan Goals</h2>
     <input type="text" id="goalInput" placeholder="Enter Goal">
     <button onclick="addGoal()">Add Goal</button>
-    <ul id="goalList"></ul>
-    <p>Completion: <span id="goalProgress">0%</span></p>
+    <ul id="goals"></ul>
+    <p>Completion: <span id="goalPercent">0%</span></p>
 
-    <h2>Dua & Motivation</h2>
-    <button onclick="generateDua()">Dua</button>
+    <h2>🤲 Dua & Motivation</h2>
+    <button onclick="dua()">Get Dua</button>
     <button onclick="motivation()">Motivation</button>
-    <p id="textOutput"></p>
+    <p id="text"></p>
 
     <button onclick="exportData()">Export Menu</button>
 </div>

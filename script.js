@@ -1,23 +1,25 @@
-let totalCalories = 0;
+let dishes = [];
+let totalCal = 0;
+let waterCount = 0;
+let tasbeeh = 0;
+let calorieGoal = 2000;
 
 const duas = [
-    "Allahumma inni laka sumtu wa bika aamantu.",
-    "Allahumma taqabbal minna siyamana.",
-    "Ya Allah forgive us.",
-    "Rabbi inni lima anzalta ilayya min khairin faqeer."
+    "Allahumma inni laka sumtu.",
+    "Ya Allah accept our fast.",
+    "Grant us forgiveness.",
+    "Increase our sabr."
 ];
 
 const motivations = [
-    "Ramadan is the month of discipline.",
-    "Every fast brings you closer to Allah.",
-    "Patience is the key to Jannah.",
-    "Small efforts daily = big rewards."
+    "Stay consistent.",
+    "Ramadan builds discipline.",
+    "Small progress daily.",
+    "Be better than yesterday."
 ];
 
 function showDate() {
-    const today = new Date();
-    document.getElementById("date").innerText =
-        "Today: " + today.toDateString();
+    date.innerText = new Date().toDateString();
 }
 
 function toggleMode() {
@@ -25,83 +27,123 @@ function toggleMode() {
 }
 
 function addDish() {
-    const name = document.getElementById("dishName").value;
-    const calories = parseInt(document.getElementById("dishCalories").value);
+    const n = name.value;
+    const c = parseInt(cal.value);
 
-    if (!name || !calories) {
-        alert("Enter valid details!");
-        return;
-    }
+    if (!n || !c) return alert("Enter details");
 
-    const li = document.createElement("li");
-    li.innerHTML = `${name} - ${calories} cal 
-    <button onclick="deleteDish(this, ${calories})">❌</button>`;
+    dishes.push({ n, c });
+    totalCal += c;
 
-    document.getElementById("dishList").appendChild(li);
-
-    totalCalories += calories;
-    updateCalories();
-    saveData();
-
-    document.getElementById("dishName").value = "";
-    document.getElementById("dishCalories").value = "";
+    render();
+    save();
+    name.value = "";
+    cal.value = "";
 }
 
-function deleteDish(btn, calories) {
-    btn.parentElement.remove();
-    totalCalories -= calories;
-    updateCalories();
-    saveData();
+function render() {
+    list.innerHTML = "";
+    dishes.forEach((d, i) => {
+        list.innerHTML += `
+        <li>
+        ${d.n} - ${d.c} cal
+        <button onclick="deleteDish(${i})">❌</button>
+        </li>`;
+    });
+    total.innerText = totalCal;
+    updateBar();
 }
 
-function updateCalories() {
-    document.getElementById("totalCalories").innerText = totalCalories;
+function deleteDish(i) {
+    totalCal -= dishes[i].c;
+    dishes.splice(i, 1);
+    render();
+    save();
+}
+
+function updateBar() {
+    let percent = (totalCal / calorieGoal) * 100;
+    bar.style.width = percent + "%";
 }
 
 function searchDish() {
-    const input = document.getElementById("searchInput").value.toLowerCase();
-    const items = document.querySelectorAll("#dishList li");
-
-    items.forEach(item => {
-        if (item.innerText.toLowerCase().includes(input)) {
-            item.style.display = "";
-        } else {
-            item.style.display = "none";
-        }
+    const s = search.value.toLowerCase();
+    document.querySelectorAll("#list li").forEach(li => {
+        li.style.display =
+            li.innerText.toLowerCase().includes(s) ? "" : "none";
     });
 }
 
-function filterLow() {
-    const items = document.querySelectorAll("#dishList li");
-
-    items.forEach(item => {
-        const cal = parseInt(item.innerText.match(/\d+/));
-        if (cal > 300) {
-            item.style.display = "none";
-        }
-    });
+function sortLow() {
+    dishes.sort((a, b) => a.c - b.c);
+    render();
 }
 
-function showAll() {
-    const items = document.querySelectorAll("#dishList li");
-    items.forEach(item => item.style.display = "");
+function sortHigh() {
+    dishes.sort((a, b) => b.c - a.c);
+    render();
 }
 
-function clearAll() {
-    document.getElementById("dishList").innerHTML = "";
-    totalCalories = 0;
-    updateCalories();
-    localStorage.clear();
+function addWater() {
+    if (waterCount < 8) waterCount++;
+    water.innerText = waterCount;
 }
 
-function generateDua() {
-    const random = Math.floor(Math.random() * duas.length);
-    document.getElementById("duaText").innerText = duas[random];
+function tasbeehCount() {
+    tasbeeh++;
+    document.getElementById("tasbeeh").innerText = tasbeeh;
+}
+
+function resetTasbeeh() {
+    tasbeeh = 0;
+    document.getElementById("tasbeeh").innerText = tasbeeh;
+}
+
+function addGoal() {
+    const g = goalInput.value;
+    if (!g) return;
+
+    const li = document.createElement("li");
+    li.innerHTML = `<input type="checkbox" onchange="goalUpdate()"> ${g}`;
+    goals.appendChild(li);
+    goalInput.value = "";
+}
+
+function goalUpdate() {
+    const all = document.querySelectorAll("#goals input");
+    const checked = document.querySelectorAll("#goals input:checked");
+    let percent = (checked.length / all.length) * 100 || 0;
+    goalPercent.innerText = percent.toFixed(0) + "%";
+}
+
+function dua() {
+    text.innerText = duas[Math.floor(Math.random() * duas.length)];
 }
 
 function motivation() {
-    const random = Math.floor(Math.random() * motivations.length);
-    document.getElementById("motivationText").innerText = motivations[random];
+    text.innerText = motivations[Math.floor(Math.random() * motivations.length)];
+}
+
+function exportData() {
+    let blob = new Blob([JSON.stringify(dishes)], { type: "text/plain" });
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "ramadan_menu.txt";
+    link.click();
+}
+
+function save() {
+    localStorage.setItem("dishes", JSON.stringify(dishes));
+    localStorage.setItem("total", totalCal);
+}
+
+function load() {
+    const saved = JSON.parse(localStorage.getItem("dishes"));
+    if (saved) {
+        dishes = saved;
+        totalCal = parseInt(localStorage.getItem("total")) || 0;
+        render();
+    }
 }
 
 function countdown() {
@@ -109,38 +151,17 @@ function countdown() {
     const iftar = new Date();
     iftar.setHours(18, 30, 0);
 
-    if (now > iftar) {
-        iftar.setDate(iftar.getDate() + 1);
-    }
+    if (now > iftar) iftar.setDate(iftar.getDate() + 1);
 
     const diff = iftar - now;
+    const h = Math.floor(diff / (1000 * 60 * 60));
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
 
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-
-    document.getElementById("countdown").innerText =
-        `${hours}h ${minutes}m ${seconds}s`;
-
+    countdown.innerText = `Iftar in ${h}h ${m}m ${s}s`;
     setTimeout(countdown, 1000);
 }
 
-function saveData() {
-    localStorage.setItem("menu", document.getElementById("dishList").innerHTML);
-    localStorage.setItem("calories", totalCalories);
-}
-
-function loadData() {
-    const savedMenu = localStorage.getItem("menu");
-    const savedCalories = localStorage.getItem("calories");
-
-    if (savedMenu) {
-        document.getElementById("dishList").innerHTML = savedMenu;
-        totalCalories = parseInt(savedCalories);
-        updateCalories();
-    }
-}
-
 showDate();
-loadData();
+load();
 countdown();
