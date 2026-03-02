@@ -1,44 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ramadan Menu Pro</title>
+    <title>Ramadan Menu Ultra</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>🌙 Ramadan Menu Planner Pro</h1>
+    <h1>🌙 Ramadan Menu Planner ULTRA</h1>
+
     <p id="date"></p>
-
-    <button onclick="toggleMode()">🌗 Toggle Dark Mode</button>
-
-    <h2>⏳ Iftar Countdown</h2>
     <p id="countdown"></p>
 
-    <h2>🥗 Add Dish</h2>
+    <button onclick="toggleMode()">🌗 Toggle Mode</button>
+
+    <h2>Add Dish</h2>
     <input type="text" id="dishName" placeholder="Dish Name">
-    <input type="number" id="dishCalories" placeholder="Calories">
-    <button onclick="addDish()">Add Dish</button>
-    <button onclick="clearAll()">Clear All</button>
+    <input type="number" id="calories" placeholder="Calories">
+    <input type="number" id="protein" placeholder="Protein (g)">
+    <input type="number" id="carbs" placeholder="Carbs (g)">
+    <input type="number" id="fat" placeholder="Fat (g)">
+    <button onclick="addDish()">Add</button>
 
-    <h3>🔎 Search Dish</h3>
-    <input type="text" id="searchInput" onkeyup="searchDish()" placeholder="Search...">
+    <h3>Search</h3>
+    <input type="text" id="searchInput" onkeyup="searchDish()">
 
-    <h3>🔥 Filter</h3>
-    <button onclick="filterLow()">Below 300 cal</button>
-    <button onclick="showAll()">Show All</button>
+    <h3>Sort</h3>
+    <button onclick="sortLow()">Low → High</button>
+    <button onclick="sortHigh()">High → Low</button>
 
     <ul id="dishList"></ul>
 
     <h3>Total Calories: <span id="totalCalories">0</span></h3>
 
-    <h2>🤲 Daily Dua</h2>
-    <button onclick="generateDua()">Get Dua</button>
-    <p id="duaText"></p>
+    <div class="progress-container">
+        <div id="progressBar"></div>
+    </div>
 
-    <h2>💪 Motivation</h2>
-    <button onclick="motivation()">Get Motivation</button>
-    <p id="motivationText"></p>
+    <h2>Ramadan Goals</h2>
+    <input type="text" id="goalInput" placeholder="Enter Goal">
+    <button onclick="addGoal()">Add Goal</button>
+    <ul id="goalList"></ul>
+    <p>Completion: <span id="goalProgress">0%</span></p>
+
+    <h2>Dua & Motivation</h2>
+    <button onclick="generateDua()">Dua</button>
+    <button onclick="motivation()">Motivation</button>
+    <p id="textOutput"></p>
+
+    <button onclick="exportData()">Export Menu</button>
 </div>
 
 <script src="script.js"></script>
