@@ -1,22 +1,9 @@
-let dishes = [];
-let totalCal = 0;
-let waterCount = 0;
-let tasbeeh = 0;
+let dishes = JSON.parse(localStorage.getItem("dishes")) || [];
+let totalCalories = parseInt(localStorage.getItem("totalCalories")) || 0;
+let water = parseInt(localStorage.getItem("water")) || 0;
+let tasbeeh = parseInt(localStorage.getItem("tasbeeh")) || 0;
+let streak = parseInt(localStorage.getItem("streak")) || 0;
 let calorieGoal = 2000;
-
-const duas = [
-    "Allahumma inni laka sumtu.",
-    "Ya Allah accept our fast.",
-    "Grant us forgiveness.",
-    "Increase our sabr."
-];
-
-const motivations = [
-    "Stay consistent.",
-    "Ramadan builds discipline.",
-    "Small progress daily.",
-    "Be better than yesterday."
-];
 
 function showDate() {
     date.innerText = new Date().toDateString();
@@ -24,126 +11,143 @@ function showDate() {
 
 function toggleMode() {
     document.body.classList.toggle("dark");
+    localStorage.setItem("mode", document.body.classList.contains("dark"));
+}
+
+if (localStorage.getItem("mode") === "true") {
+    document.body.classList.add("dark");
 }
 
 function addDish() {
-    const n = name.value;
-    const c = parseInt(cal.value);
+    const name = dishName.value;
+    const cal = parseInt(calories.value);
 
-    if (!n || !c) return alert("Enter details");
+    if (!name || !cal) return alert("Fill required fields");
 
-    dishes.push({ n, c });
-    totalCal += c;
+    dishes.push({ name, cal });
+    totalCalories += cal;
 
-    render();
-    save();
-    name.value = "";
-    cal.value = "";
+    saveData();
+    renderDishes();
 }
 
-function render() {
-    list.innerHTML = "";
+function renderDishes() {
+    dishList.innerHTML = "";
     dishes.forEach((d, i) => {
-        list.innerHTML += `
+        dishList.innerHTML += `
         <li>
-        ${d.n} - ${d.c} cal
+        ${d.name} - ${d.cal} cal
         <button onclick="deleteDish(${i})">❌</button>
         </li>`;
     });
-    total.innerText = totalCal;
-    updateBar();
+    totalCal.innerText = totalCalories;
+    updateProgress();
 }
 
 function deleteDish(i) {
-    totalCal -= dishes[i].c;
+    totalCalories -= dishes[i].cal;
     dishes.splice(i, 1);
-    render();
-    save();
-}
-
-function updateBar() {
-    let percent = (totalCal / calorieGoal) * 100;
-    bar.style.width = percent + "%";
+    saveData();
+    renderDishes();
 }
 
 function searchDish() {
-    const s = search.value.toLowerCase();
-    document.querySelectorAll("#list li").forEach(li => {
+    const text = search.value.toLowerCase();
+    document.querySelectorAll("#dishList li").forEach(li => {
         li.style.display =
-            li.innerText.toLowerCase().includes(s) ? "" : "none";
+            li.innerText.toLowerCase().includes(text) ? "" : "none";
     });
 }
 
 function sortLow() {
-    dishes.sort((a, b) => a.c - b.c);
-    render();
+    dishes.sort((a, b) => a.cal - b.cal);
+    renderDishes();
 }
 
 function sortHigh() {
-    dishes.sort((a, b) => b.c - a.c);
-    render();
+    dishes.sort((a, b) => b.cal - a.cal);
+    renderDishes();
+}
+
+function updateProgress() {
+    let percent = (totalCalories / calorieGoal) * 100;
+    progressBar.style.width = percent + "%";
 }
 
 function addWater() {
-    if (waterCount < 8) waterCount++;
-    water.innerText = waterCount;
+    if (water < 8) water++;
+    waterCount.innerText = water;
+    localStorage.setItem("water", water);
 }
 
-function tasbeehCount() {
+function resetWater() {
+    water = 0;
+    waterCount.innerText = water;
+    localStorage.setItem("water", water);
+}
+
+function countTasbeeh() {
     tasbeeh++;
-    document.getElementById("tasbeeh").innerText = tasbeeh;
+    tasbeehCount.innerText = tasbeeh;
+    localStorage.setItem("tasbeeh", tasbeeh);
 }
 
 function resetTasbeeh() {
     tasbeeh = 0;
-    document.getElementById("tasbeeh").innerText = tasbeeh;
+    tasbeehCount.innerText = tasbeeh;
+    localStorage.setItem("tasbeeh", tasbeeh);
 }
 
 function addGoal() {
-    const g = goalInput.value;
-    if (!g) return;
+    const goal = goalInput.value;
+    if (!goal) return;
 
     const li = document.createElement("li");
-    li.innerHTML = `<input type="checkbox" onchange="goalUpdate()"> ${g}`;
-    goals.appendChild(li);
+    li.innerHTML = `<input type="checkbox" onchange="updateGoal()"> ${goal}`;
+    goalList.appendChild(li);
     goalInput.value = "";
 }
 
-function goalUpdate() {
-    const all = document.querySelectorAll("#goals input");
-    const checked = document.querySelectorAll("#goals input:checked");
+function updateGoal() {
+    const all = document.querySelectorAll("#goalList input");
+    const checked = document.querySelectorAll("#goalList input:checked");
     let percent = (checked.length / all.length) * 100 || 0;
     goalPercent.innerText = percent.toFixed(0) + "%";
 }
 
-function dua() {
-    text.innerText = duas[Math.floor(Math.random() * duas.length)];
+function saveNotes() {
+    localStorage.setItem("notes", notes.value);
 }
 
-function motivation() {
-    text.innerText = motivations[Math.floor(Math.random() * motivations.length)];
+notes.value = localStorage.getItem("notes") || "";
+
+function updateStreak() {
+    let lastVisit = localStorage.getItem("lastVisit");
+    let today = new Date().toDateString();
+
+    if (lastVisit !== today) {
+        streak++;
+        localStorage.setItem("streak", streak);
+        localStorage.setItem("lastVisit", today);
+    }
+
+    document.getElementById("streak").innerText = streak;
 }
 
 function exportData() {
-    let blob = new Blob([JSON.stringify(dishes)], { type: "text/plain" });
+    let data = {
+        dishes,
+        totalCalories,
+        water,
+        tasbeeh,
+        notes: notes.value
+    };
+
+    let blob = new Blob([JSON.stringify(data)], { type: "application/json" });
     let link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "ramadan_menu.txt";
+    link.download = "ramadan_data.json";
     link.click();
-}
-
-function save() {
-    localStorage.setItem("dishes", JSON.stringify(dishes));
-    localStorage.setItem("total", totalCal);
-}
-
-function load() {
-    const saved = JSON.parse(localStorage.getItem("dishes"));
-    if (saved) {
-        dishes = saved;
-        totalCal = parseInt(localStorage.getItem("total")) || 0;
-        render();
-    }
 }
 
 function countdown() {
@@ -162,6 +166,14 @@ function countdown() {
     setTimeout(countdown, 1000);
 }
 
+function saveData() {
+    localStorage.setItem("dishes", JSON.stringify(dishes));
+    localStorage.setItem("totalCalories", totalCalories);
+}
+
 showDate();
-load();
+renderDishes();
+waterCount.innerText = water;
+tasbeehCount.innerText = tasbeeh;
+updateStreak();
 countdown();

@@ -15,9 +15,9 @@ body {
     margin: auto;
 }
 
-input, button {
-    padding: 6px;
+input, button, textarea {
     margin: 5px;
+    padding: 6px;
 }
 
 ul {
@@ -31,8 +31,9 @@ ul {
     background: #ddd;
 }
 
-#bar {
+#progressBar {
     height: 20px;
     width: 0%;
     background: green;
+    transition: 0.4s;
 }
