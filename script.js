@@ -1,199 +1,183 @@
+// Load saved data
 let dishes = JSON.parse(localStorage.getItem("dishes")) || [];
-let totalCalories = parseInt(localStorage.getItem("totalCalories")) || 0;
-let water = parseInt(localStorage.getItem("water")) || 0;
-let tasbeeh = parseInt(localStorage.getItem("tasbeeh")) || 0;
-let streak = parseInt(localStorage.getItem("streak")) || 0;
-let calorieGoal = 2000;
+let water = Number(localStorage.getItem("water")) || 0;
+let tasbeeh = Number(localStorage.getItem("tasbeeh")) || 0;
+let goals = JSON.parse(localStorage.getItem("goals")) || [];
+let streak = Number(localStorage.getItem("streak")) || 0;
 
-function showDate() {
-    date.innerText = new Date().toDateString();
-}
+const quotes = [
+    "Indeed, with hardship comes ease. (94:6)",
+    "Allah does not burden a soul beyond that it can bear. (2:286)",
+    "So remember Me; I will remember you. (2:152)",
+    "Fasting is a shield. (Hadith)",
+    "Make dua, Allah is listening."
+];
 
-function toggleMode() {
-    document.body.classList.toggle("dark");
-    localStorage.setItem("mode", document.body.classList.contains("dark"));
-}
+// Initialize
+window.onload = function() {
+    updateDishes();
+    updateWater();
+    updateTasbeeh();
+    updateGoals();
+    document.getElementById("notes").value = localStorage.getItem("notes") || "";
+    newQuote();
 
-if (localStorage.getItem("mode") === "true") {
-    document.body.classList.add("dark");
-}
-
-function addDish() {
-    const name = dishName.value;
-    const cal = parseInt(calories.value);
-
-    if (!name || !cal) return alert("Fill required fields");
-
-    dishes.push({ name, cal });
-    totalCalories += cal;
-
-    saveData();
-    renderDishes();
-}
-
-function renderDishes() {
-    dishList.innerHTML = "";
-    dishes.forEach((d, i) => {
-        dishList.innerHTML += `
-        <li>
-        ${d.name} - ${d.cal} cal
-        <button onclick="deleteDish(${i})">❌</button>
-        </li>`;
-    });
-    totalCal.innerText = totalCalories;
-    updateProgress();
-}
-
-function deleteDish(i) {
-    totalCalories -= dishes[i].cal;
-    dishes.splice(i, 1);
-    saveData();
-    renderDishes();
-}
-
-function searchDish() {
-    const text = search.value.toLowerCase();
-    document.querySelectorAll("#dishList li").forEach(li => {
-        li.style.display =
-            li.innerText.toLowerCase().includes(text) ? "" : "none";
-    });
-}
-
-function sortLow() {
-    dishes.sort((a, b) => a.cal - b.cal);
-    renderDishes();
-}
-
-function sortHigh() {
-    dishes.sort((a, b) => b.cal - a.cal);
-    renderDishes();
-}
-
-function updateProgress() {
-    let percent = (totalCalories / calorieGoal) * 100;
-    progressBar.style.width = percent + "%";
-}
-
-function addWater() {
-    if (water < 8) water++;
-    waterCount.innerText = water;
-    localStorage.setItem("water", water);
-}
-
-function resetWater() {
-    water = 0;
-    waterCount.innerText = water;
-    localStorage.setItem("water", water);
-}
-
-function countTasbeeh() {
-    tasbeeh++;
-    tasbeehCount.innerText = tasbeeh;
-    localStorage.setItem("tasbeeh", tasbeeh);
-}
-
-function resetTasbeeh() {
-    tasbeeh = 0;
-    tasbeehCount.innerText = tasbeeh;
-    localStorage.setItem("tasbeeh", tasbeeh);
-}
-
-function addGoal() {
-    const goal = goalInput.value;
-    if (!goal) return;
-
-    const li = document.createElement("li");
-    li.innerHTML = `<input type="checkbox" onchange="updateGoal()"> ${goal}`;
-    goalList.appendChild(li);
-    goalInput.value = "";
-}
-
-function updateGoal() {
-    const all = document.querySelectorAll("#goalList input");
-    const checked = document.querySelectorAll("#goalList input:checked");
-    let percent = (checked.length / all.length) * 100 || 0;
-    goalPercent.innerText = percent.toFixed(0) + "%";
-}
-
-function saveNotes() {
-    localStorage.setItem("notes", notes.value);
-}
-
-notes.value = localStorage.getItem("notes") || "";
-
-function updateStreak() {
-    let lastVisit = localStorage.getItem("lastVisit");
-    let today = new Date().toDateString();
-
-    if (lastVisit !== today) {
-        streak++;
-        localStorage.setItem("streak", streak);
-        localStorage.setItem("lastVisit", today);
+    if(localStorage.getItem("theme") === "dark"){
+        document.body.classList.add("dark");
     }
 
+    streak++;
+    localStorage.setItem("streak", streak);
     document.getElementById("streak").innerText = streak;
+
+    document.getElementById("date").innerText = new Date().toDateString();
+};
+
+// Dark Mode
+function toggleMode(){
+    document.body.classList.toggle("dark");
+    localStorage.setItem("theme",
+        document.body.classList.contains("dark") ? "dark" : "light"
+    );
 }
 
-function exportData() {
-    let data = {
-        dishes,
-        totalCalories,
-        water,
-        tasbeeh,
-        notes: notes.value
-    };
+// Motivation
+function newQuote(){
+    document.getElementById("quote").innerText =
+        quotes[Math.floor(Math.random() * quotes.length)];
+}
 
-    let blob = new Blob([JSON.stringify(data)], { type: "application/json" });
-    let link = document.createElement("a");
+// Nutrition
+function addDish(){
+    const dish = {
+        name: dishName.value,
+        cal: Number(calories.value)
+    };
+    dishes.push(dish);
+    localStorage.setItem("dishes", JSON.stringify(dishes));
+    updateDishes();
+}
+
+function updateDishes(){
+    dishList.innerHTML = "";
+    let total = 0;
+
+    dishes.forEach(d=>{
+        dishList.innerHTML += `<li>${d.name} - ${d.cal} cal</li>`;
+        total += d.cal;
+    });
+
+    totalCal.innerText = total;
+    progressBar.style.width = (total/2000)*100 + "%";
+}
+
+function searchDish(){
+    const value = search.value.toLowerCase();
+    dishList.innerHTML = "";
+    dishes.filter(d => d.name.toLowerCase().includes(value))
+          .forEach(d=>{
+              dishList.innerHTML += `<li>${d.name} - ${d.cal} cal</li>`;
+          });
+}
+
+function sortLow(){
+    dishes.sort((a,b)=>a.cal-b.cal);
+    updateDishes();
+}
+
+function sortHigh(){
+    dishes.sort((a,b)=>b.cal-a.cal);
+    updateDishes();
+}
+
+// Water
+function addWater(){
+    water++;
+    localStorage.setItem("water", water);
+    updateWater();
+}
+
+function resetWater(){
+    water = 0;
+    localStorage.setItem("water", water);
+    updateWater();
+}
+
+function updateWater(){
+    waterCount.innerText = water;
+}
+
+// Tasbeeh
+function countTasbeeh(){
+    tasbeeh++;
+    localStorage.setItem("tasbeeh", tasbeeh);
+    updateTasbeeh();
+}
+
+function resetTasbeeh(){
+    tasbeeh = 0;
+    localStorage.setItem("tasbeeh", tasbeeh);
+    updateTasbeeh();
+}
+
+function updateTasbeeh(){
+    tasbeehCount.innerText = tasbeeh;
+}
+
+// Goals
+function addGoal(){
+    goals.push({text: goalInput.value, done:false});
+    localStorage.setItem("goals", JSON.stringify(goals));
+    updateGoals();
+}
+
+function updateGoals(){
+    goalList.innerHTML = "";
+    let completed = 0;
+
+    goals.forEach((g,i)=>{
+        goalList.innerHTML +=
+        `<li onclick="toggleGoal(${i})"
+         style="cursor:pointer; text-decoration:${g.done?'line-through':'none'}">
+         ${g.text}</li>`;
+        if(g.done) completed++;
+    });
+
+    goalPercent.innerText =
+        goals.length ? Math.round((completed/goals.length)*100)+"%" : "0%";
+}
+
+function toggleGoal(i){
+    goals[i].done = !goals[i].done;
+    localStorage.setItem("goals", JSON.stringify(goals));
+    updateGoals();
+}
+
+// Notes
+function saveNotes(){
+    localStorage.setItem("notes", notes.value);
+    alert("Notes Saved!");
+}
+
+// Prayer
+function checkPrayer(){
+    const h = new Date().getHours();
+    let msg = h<12?"Fajr/Dhuhr time":
+              h<16?"Asr time":
+              h<19?"Maghrib time":
+              "Isha time";
+    prayerTime.innerText = msg;
+}
+
+// Export
+function exportData(){
+    const data = {
+        dishes, water, tasbeeh, goals, streak
+    };
+    const blob = new Blob([JSON.stringify(data,null,2)],
+        {type:"application/json"});
+    const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = "ramadan_data.json";
     link.click();
-}
-
-function countdown() {
-    const now = new Date();
-    const iftar = new Date();
-    iftar.setHours(18, 30, 0);
-
-    if (now > iftar) iftar.setDate(iftar.getDate() + 1);
-
-    const diff = iftar - now;
-    const h = Math.floor(diff / (1000 * 60 * 60));
-    const m = Math.floor((diff / (1000 * 60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
-
-    countdown.innerText = `Iftar in ${h}h ${m}m ${s}s`;
-    setTimeout(countdown, 1000);
-}
-
-function saveData() {
-    localStorage.setItem("dishes", JSON.stringify(dishes));
-    localStorage.setItem("totalCalories", totalCalories);
-}
-
-showDate();
-renderDishes();
-waterCount.innerText = water;
-tasbeehCount.innerText = tasbeeh;
-updateStreak();
-countdown();
-function calculateBMI() {
-    const weight = parseFloat(document.getElementById("weight").value);
-    const height = parseFloat(document.getElementById("height").value) / 100;
-
-    if (!weight || !height) {
-        alert("Enter valid height and weight");
-        return;
-    }
-
-    const bmi = (weight / (height * height)).toFixed(2);
-    let category = "";
-
-    if (bmi < 18.5) category = "Underweight";
-    else if (bmi < 24.9) category = "Normal weight";
-    else if (bmi < 29.9) category = "Overweight";
-    else category = "Obese";
-
-    document.getElementById("bmiResult").innerText =
-        `Your BMI: ${bmi} (${category})`;
 }

@@ -14,6 +14,12 @@
 
     <button onclick="toggleMode()">🌗 Toggle Mode</button>
 
+    <!-- Daily Motivation -->
+    <h2>✨ Daily Motivation</h2>
+    <p id="quote"></p>
+    <button onclick="newQuote()">New Quote</button>
+
+    <!-- Nutrition Tracker -->
     <h2>🥗 Nutrition Tracker</h2>
     <input id="dishName" placeholder="Dish">
     <input id="calories" type="number" placeholder="Calories">
@@ -31,26 +37,36 @@
     <h3>Total: <span id="totalCal">0</span> / 2000</h3>
     <div class="progress"><div id="progressBar"></div></div>
 
+    <!-- Water -->
     <h2>💧 Water Intake</h2>
     <button onclick="addWater()">+1 Glass</button>
     <button onclick="resetWater()">Reset</button>
     <p><span id="waterCount">0</span>/8</p>
 
+    <!-- Tasbeeh -->
     <h2>📿 Tasbeeh</h2>
     <button onclick="countTasbeeh()">Count</button>
     <button onclick="resetTasbeeh()">Reset</button>
     <p id="tasbeehCount">0</p>
 
+    <!-- Goals -->
     <h2>🎯 Goals</h2>
     <input id="goalInput" placeholder="Add Goal">
     <button onclick="addGoal()">Add</button>
     <ul id="goalList"></ul>
     <p>Completion: <span id="goalPercent">0%</span></p>
 
+    <!-- Notes -->
     <h2>📝 Notes</h2>
     <textarea id="notes" rows="4" placeholder="Write reflection..."></textarea>
     <button onclick="saveNotes()">Save Notes</button>
 
+    <!-- Prayer -->
+    <h2>🕌 Prayer Reminder</h2>
+    <p id="prayerTime"></p>
+    <button onclick="checkPrayer()">Check Time</button>
+
+    <!-- Streak -->
     <h2>🔥 Ramadan Streak</h2>
     <p>Days Active: <span id="streak">0</span></p>
 
