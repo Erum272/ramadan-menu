@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ramadan Productivity Pro</title>
+    <title>Ramadan Royal Productivity Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>🌙 Ramadan Productivity Pro</h1>
 
-    <p id="date"></p>
+    <h1>🌙 Ramadan Royal Productivity</h1>
+
+    <!-- REAL TIME -->
+    <h2>⏰ Live Royal Time</h2>
+    <p id="liveDate"></p>
+    <p id="liveTime"></p>
+    <p id="greeting"></p>
+
     <button onclick="toggleMode()">🌗 Toggle Mode</button>
 
     <!-- Motivation -->
@@ -19,7 +25,7 @@
 
     <!-- Nutrition -->
     <h2>🥗 Nutrition Tracker</h2>
-    <input id="dishName" placeholder="Dish">
+    <input id="dishName" placeholder="Dish Name">
     <input id="calories" type="number" placeholder="Calories">
     <button onclick="addDish()">Add</button>
 
@@ -28,6 +34,7 @@
     <button onclick="sortHigh()">Sort High</button>
 
     <ul id="dishList"></ul>
+
     <h3>Total: <span id="totalCal">0</span> / 2000</h3>
     <div class="progress"><div id="progressBar"></div></div>
 
@@ -65,7 +72,7 @@
 
     <!-- Notes -->
     <h2>📝 Notes</h2>
-    <textarea id="notes" rows="4" placeholder="Write reflection..."></textarea>
+    <textarea id="notes" rows="4"></textarea>
     <button onclick="saveNotes()">Save Notes</button>
 
     <!-- Prayer -->
@@ -79,6 +86,7 @@
 
     <button onclick="resetAll()">Reset All</button>
     <button onclick="exportData()">Export Data</button>
+
 </div>
 
 <script src="script.js"></script>
