@@ -1,32 +1,134 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial;
-    background: #f4f4f4;
-    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fdfbfb, #ebedee);
+    min-height: 100vh;
+    padding: 30px;
+    transition: all 0.4s ease;
 }
 
+/* Container Card */
 .container {
-    max-width: 600px;
+    max-width: 700px;
     margin: auto;
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transition: 0.4s ease;
 }
 
-.dark {
-    background: #111;
-    color: white;
+/* Headings */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
+h2 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/* Inputs */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #6c63ff;
+    box-shadow: 0 0 8px rgba(108,99,255,0.3);
+}
+
+/* Buttons */
 button {
-    margin: 5px 0;
-    padding: 5px 10px;
+    padding: 8px 14px;
+    margin: 5px 5px 5px 0;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6c63ff, #836fff);
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s ease;
 }
 
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108,99,255,0.4);
+}
+
+/* Lists */
+ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+li {
+    background: white;
+    padding: 8px 12px;
+    margin: 6px 0;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+li:hover {
+    transform: scale(1.02);
+}
+
+/* Progress Bar */
 .progress {
     width: 100%;
     background: #ddd;
     height: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
 #progressBar {
     height: 10px;
-    background: green;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #6c63ff, #00c9ff);
     width: 0%;
+    transition: width 0.4s ease;
+}
+
+/* Dark Mode */
+.dark {
+    background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+    color: white;
+}
+
+.dark .container {
+    background: rgba(30, 30, 30, 0.8);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.dark input,
+.dark textarea {
+    background: #333;
+    color: white;
+    border: 1px solid #555;
+}
+
+.dark li {
+    background: #2b2b2b;
 }
