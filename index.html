@@ -10,22 +10,17 @@
     <h1>🌙 Ramadan Productivity Pro</h1>
 
     <p id="date"></p>
-    <p id="countdown"></p>
-
     <button onclick="toggleMode()">🌗 Toggle Mode</button>
 
-    <!-- Daily Motivation -->
+    <!-- Motivation -->
     <h2>✨ Daily Motivation</h2>
     <p id="quote"></p>
     <button onclick="newQuote()">New Quote</button>
 
-    <!-- Nutrition Tracker -->
+    <!-- Nutrition -->
     <h2>🥗 Nutrition Tracker</h2>
     <input id="dishName" placeholder="Dish">
     <input id="calories" type="number" placeholder="Calories">
-    <input id="protein" type="number" placeholder="Protein">
-    <input id="carbs" type="number" placeholder="Carbs">
-    <input id="fat" type="number" placeholder="Fat">
     <button onclick="addDish()">Add</button>
 
     <input id="search" placeholder="Search..." onkeyup="searchDish()">
@@ -33,9 +28,15 @@
     <button onclick="sortHigh()">Sort High</button>
 
     <ul id="dishList"></ul>
-
     <h3>Total: <span id="totalCal">0</span> / 2000</h3>
     <div class="progress"><div id="progressBar"></div></div>
+
+    <!-- BMI -->
+    <h2>⚖ BMI Calculator</h2>
+    <input id="weight" type="number" placeholder="Weight (kg)">
+    <input id="height" type="number" placeholder="Height (cm)">
+    <button onclick="calculateBMI()">Calculate</button>
+    <p id="bmiResult"></p>
 
     <!-- Water -->
     <h2>💧 Water Intake</h2>
@@ -56,6 +57,12 @@
     <ul id="goalList"></ul>
     <p>Completion: <span id="goalPercent">0%</span></p>
 
+    <!-- Tasks -->
+    <h2>📅 Daily Tasks</h2>
+    <input id="taskInput" placeholder="Add Task">
+    <button onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+
     <!-- Notes -->
     <h2>📝 Notes</h2>
     <textarea id="notes" rows="4" placeholder="Write reflection..."></textarea>
@@ -70,6 +77,7 @@
     <h2>🔥 Ramadan Streak</h2>
     <p>Days Active: <span id="streak">0</span></p>
 
+    <button onclick="resetAll()">Reset All</button>
     <button onclick="exportData()">Export Data</button>
 </div>
 
